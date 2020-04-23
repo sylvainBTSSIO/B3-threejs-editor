@@ -1,11 +1,16 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {Store, updateColor, updateGadget} from "../../store";
 
 const Gadget = props => {
 
     const {dispatch, state} = useContext(Store)
     const [gadget, setGadget] = useState(null)
-    const sphere = useRef(null)
+
+    useEffect(() => {
+        if (gadget) {
+            dispatch(updateGadget(gadget))
+        }
+    }, [gadget])
 
     return (
         <div className="Gadget">
@@ -14,19 +19,19 @@ const Gadget = props => {
             <form>
                 <div className="radio">
                     <label>
-                        <input type="radio" value="sphere" onClick={() => { dispatch(updateGadget(setGadget === this.value))}}/>
+                        <input type="radio" name={"gadget"} value="sphere" onChange={e => { setGadget(e.currentTarget.value)}}/>
                         1 sphere
                     </label>
                 </div>
                 <div className="radio">
                     <label>
-                        <input type="radio" value="cube" onClick={() => { dispatch(updateGadget(setGadget === this.value))}}/>
+                        <input type="radio" name={"gadget"} value="cube" onChange={e => { setGadget(e.currentTarget.value)}}/>
                         1 cube
                     </label>
                 </div>
                 <div className="radio">
                     <label>
-                        <input type="radio" value="spheres" onClick={() => { dispatch(updateGadget(setGadget === this.value ))}} />
+                        <input type="radio" name={"gadget"} value="spheres" onChange={e => { setGadget(e.currentTarget.value)}} />
                         2 spheres
                     </label>
                 </div>
@@ -36,7 +41,3 @@ const Gadget = props => {
 }
 
 export default Gadget;
-/*3 boutons : 1 sphere , 1 cube , 2 sphere
-* save chaine de caractere pour chaque
-* radio box
- */
